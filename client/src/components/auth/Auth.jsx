@@ -15,11 +15,15 @@ import Icon from "./Icon.jsx";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Input from "./Input";
 import useStyles from "./styles.js";
+import { signin, signup } from "../../actions/auth";
+
+const initialState = { firstName: "", lastName: "", email: "", password: "", confirmPassword: "" };
 
 const Auth = () => {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+  const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,8 +31,15 @@ const Auth = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(isSignup){
+      dispatch(signup(formData, navigate));
+    }else{
+      dispatch(signin(formData, navigate));
+    }
   };
-  const handleChange = () => {};
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const switchMode = () => {
     setIsSignup((prevIsSignup) => !prevIsSignup);
     setShowPassword(false);

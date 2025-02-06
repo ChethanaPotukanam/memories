@@ -62,3 +62,7 @@ const getPosts = () => async(dispatch) => {
     const action = {type:'',payload:[]}
     dispatch(action)
 }
+
+// why middleware
+wants to like a post
+// click the button => auth middleware (NEXT) => Like controller
