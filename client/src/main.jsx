@@ -13,7 +13,7 @@ import "./main.css"
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
 
 // Create a Material-UI theme
-const theme = createTheme(); // Customize this theme if necessary
+const theme = createTheme(); 
 const clientId =
  "522966842354-7qqe3d1pqi77bi64a750vp4bef458b9l.apps.googleusercontent.com";
 

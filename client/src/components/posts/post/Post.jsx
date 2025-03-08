@@ -6,6 +6,7 @@ import {
   CardMedia,
   Button,
   Typography,
+  CardActionArea,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -15,10 +16,12 @@ import moment from "moment";
 import useStyles from "./styles";
 import { useDispatch } from "react-redux";
 import { deletePost, likePost } from "../../../actions/posts";
+import { useNavigate } from "react-router-dom";
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("profile")) || {};
 
   const Likes = () => {
@@ -47,82 +50,90 @@ const Post = ({ post, setCurrentId }) => {
       </>
     );
   };
+  const openPost = () =>{
+    navigate(`/posts/${post._id}`)
+  }
 
   return (
-    <Card className={classes.card}>
-      <CardMedia
-        className={classes.media}
-        image={post.selectedFile}
-        title={post.title}
-      />
-      <div className={classes.overlay}>
-        <Typography variant="h6">{post.name}</Typography>
-        <Typography variant="body2">
-          {moment(post.createdAt).fromNow()}
-        </Typography>
-      </div>
-      <div className={classes.overlay2}>
-        {(user?.result?.name === post?.name ||
-          user?.result?.name === post?.name) && (
-          <Button
-            style={{ color: "white" }}
-            size="small"
-            onClick={() => setCurrentId(post._id)}
-          >
-            <MoreHorizIcon fontSize="default" />
-          </Button>
-        )}
-      </div>
-      <div className={classes.details}>
-        <Typography variant="body2" color="textSecondary">
-          {post.tags.map((tag) => `#${tag} `)}
-        </Typography>
-      </div>
-      <Typography
-        className={classes.title}
-        variant="h6"
-        style={{ fontSize: "0.875rem" }}
-        gutterBottom
+    <Card className={classes.card} raised elevation={6}>
+      <CardActionArea
+        className={classes.cardAction}
+        onClick={openPost}
       >
-        {post.title}
-      </Typography>
-      <CardContent>
-        <Typography
-          variant="body2"
-          color="textSecondary"
-          component="p"
-          style={{ fontSize: "0.875rem" }} // 14px equivalent
-        >
-          {post.message}
-        </Typography>
-        <CardActions className={classes.cardActions}>
-          <Button
-            size="small"
-            color="primary"
-            disabled={!user?.result}
-            onClick={() => dispatch(likePost(post._id))}
-          >
-            <Likes />
-          </Button>
+        <CardMedia
+          className={classes.media}
+          image={post.selectedFile}
+          title={post.title}
+        />
+        <div className={classes.overlay}>
+          <Typography variant="h6">{post.name}</Typography>
+          <Typography variant="body2">
+            {moment(post.createdAt).fromNow()}
+          </Typography>
+        </div>
+        <div className={classes.overlay2}>
           {(user?.result?.name === post?.name ||
             user?.result?.name === post?.name) && (
             <Button
+              style={{ color: "white" }}
               size="small"
-              color="primary"
-              onClick={() => {
-                if (
-                  window.confirm("Are you sure you want to delete this post?")
-                ) {
-                  dispatch(deletePost(post._id));
-                }
-              }}
+              onClick={() => setCurrentId(post._id)}
             >
-              <DeleteIcon fontSize="small" />
-              Delete
+              <MoreHorizIcon fontSize="default" />
             </Button>
           )}
-        </CardActions>
-      </CardContent>
+        </div>
+        <div className={classes.details}>
+          <Typography variant="body2" color="textSecondary">
+            {post.tags.map((tag) => `#${tag} `)}
+          </Typography>
+        </div>
+        <Typography
+          className={classes.title}
+          variant="h6"
+          style={{ fontSize: "0.875rem" }}
+          gutterBottom
+        >
+          {post.title}
+        </Typography>
+        <CardContent>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            style={{ fontSize: "0.875rem" }} // 14px equivalent
+          >
+            {post.message}
+          </Typography>
+          <CardActions className={classes.cardActions}>
+            <Button
+              size="small"
+              color="primary"
+              disabled={!user?.result}
+              onClick={() => dispatch(likePost(post._id))}
+            >
+              <Likes />
+            </Button>
+            {(user?.result?.name === post?.name ||
+              user?.result?.name === post?.name) && (
+              <Button
+                size="small"
+                color="primary"
+                onClick={() => {
+                  if (
+                    window.confirm("Are you sure you want to delete this post?")
+                  ) {
+                    dispatch(deletePost(post._id));
+                  }
+                }}
+              >
+                <DeleteIcon fontSize="small" />
+                Delete
+              </Button>
+            )}
+          </CardActions>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 };
