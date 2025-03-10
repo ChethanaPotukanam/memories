@@ -66,3 +66,6 @@ const getPosts = () => async(dispatch) => {
 // why middleware
 wants to like a post
 // click the button => auth middleware (NEXT) => Like controller
+
+Take care mongoDB setup
+Take care google auth authentication (After deploying also)
