@@ -42,7 +42,7 @@ const Navbar = () => {
             className={classes.heading}
             variant="h5"
           >
-            Memories
+            StoryBook
           </Typography>
           <img
             className={classes.image}

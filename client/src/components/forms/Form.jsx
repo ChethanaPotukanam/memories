@@ -47,7 +47,7 @@ const Form = ({currentId , setCurrentId}) => {
     return(
       <Paper className={classes.paper}>
         <Typography variant="h6" align="center">
-          Please SignIN to create your own memories and like other's memories.
+          Please SignIN to create your own stories and like other's stories.
         </Typography>
       </Paper>
     )
@@ -56,7 +56,7 @@ const Form = ({currentId , setCurrentId}) => {
   return (
     <Paper className={classes.paper} elevation={6}>
       <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-        <Typography variant="h6">{currentId? 'Edit' : 'Creating'} a Memory</Typography>
+        <Typography variant="h6">{currentId? 'Edit' : 'Creating'} a Story</Typography>
         <TextField name="title" variant="outlined" label="Title" fullWidth
           value={postData.title}
           onChange={(e)=>setPostData({...postData , title:e.target.value})} />
